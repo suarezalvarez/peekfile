@@ -1,2 +1,3 @@
 # peekfile
-ALG task, 25.10.2023
+This is the repository for the ALG tasks of the master of Bioinformatics for health sciences at UPF
+
