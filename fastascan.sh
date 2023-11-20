@@ -28,8 +28,9 @@ echo
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "This program uses 2 arguments: the directory and the number of lines of each file to show. If you only specify one of them, it will be interpreted as the directory by default."
 echo
-echo "This program considers a .fasta or .fa file to be a nucleotide (RNA or DNA) sequence if the content of A, C, T, G, U and N in the sequences contained in the file is greater or equal than 90%. If this condition is not fulfilled, the file will automatically be considered a protein sequence file." 
+echo "This program considers a .fasta or .fa file to be a nucleotide (RNA or DNA) sequence if the content of A, C, T, G, U and N (upper or lower case) in the sequences contained in the file is greater or equal than 90%. If this condition is not fulfilled, the file will automatically be considered a protein sequence file." 
 echo 
 echo 'This program considers the first word (delimited by spaces) after the ">" symbol in a fasta header as the identifier of the sequence.'
 echo
@@ -43,7 +44,7 @@ echo
 
 	# Number of files and IDs
 	
-echo Total number of .fasta and .fa files in the specified folders and its subfolders: $(find $directory -name "*.fasta" -or -name "*.fa" | wc -l) 
+echo Total number of .fasta and .fa files in the specified folders and its subfolders: $(find $directory -name "*.fasta" -or -name "*.fa" -type l -or -type f| wc -l) 
 
 if [[ $(find $directory -name "*.fasta" -or -name "*.fa" | wc -l) -eq 0 ]]; then exit 1; fi      # exit program if there are no fasta files in the directory
 
@@ -64,13 +65,15 @@ echo
 
 
 find $directory -name "*.fasta" -or -name "*.fa" | while read file; do 			# loop over each file name
+	
+	if [[ -d "$file" ]]; then # if there's a directory with a name that ends in .fasta, skip it
+	continue
 
-	if ! grep -q ">" "$file"; then 							# go to next file if there are no fasta headers in the current file (to avoid reading binary files)
+	elif ! awk -F '' 'NR==1{print $1}' "$file" | grep -q ">" ; then 							# go to next file if the first line is not a fasta header (to avoid reading binary files)
 	echo ========== "$file" ==========
 	echo
-	echo This is file does not contain sequences in fasta format
-	continue
-	 
+	echo This file does not contain sequences in fasta format
+	continue	 
 	fi 
 
 	# number of characters in sequences of the file that may be nucleotides -- considering mainly A/a, C/c, T/t, G/g, U/u and N/n as the characters that encode nucleotides that will be mostly present in the sequences
