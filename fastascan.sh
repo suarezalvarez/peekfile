@@ -122,9 +122,9 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 		echo
 	
 	
-		echo This file contains $(grep -c ">" "$file") nucleic acid 'sequence(s)' 		# number of fasta headers ">"
+		echo $(grep -c ">" "$file") nucleic acid 'sequence(s)' 		# number of fasta headers ">"
 		echo
-		echo The total number of nucleotides in the sequences of this file is: $total_chars_sequences
+		echo Nucleotides in the sequences of this file: $total_chars_sequences
 	
 	
 	
@@ -135,9 +135,9 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 		echo	
 		
 		
-		echo This file contains $(grep -c ">" "$file") protein 'sequence(s)' 		# number of fasta headers ">"
+		echo $(grep -c ">" "$file") protein 'sequence(s)' 		# number of fasta headers ">"
 		echo
-		echo The total number of amino acids in the sequences of this file is: $total_chars_sequences
+		echo Amino acids in the sequences of this file: $total_chars_sequences
 	fi
 	echo
 	
@@ -145,9 +145,9 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 	
 	
 	if [[ -h "$file" ]]; then	 							# is it a symlink?
-		echo This file is a symbolic link
+		echo Symbolic link
 	else
-		echo This file is not a symbolic link
+		echo Not a symbolic link
 	fi
 	echo
 	
