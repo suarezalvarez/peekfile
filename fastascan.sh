@@ -124,7 +124,7 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 	
 		echo $(grep -c ">" "$file") nucleic acid 'sequence(s)' 		# number of fasta headers ">"
 		echo
-		echo Nucleotides in the sequences of this file: $total_chars_sequences
+		echo $total_chars_sequences nucleotides in the sequences of this file
 	
 	
 	
@@ -137,7 +137,7 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 		
 		echo $(grep -c ">" "$file") protein 'sequence(s)' 		# number of fasta headers ">"
 		echo
-		echo Amino acids in the sequences of this file: $total_chars_sequences
+		echo $total_chars_sequences amino acids in the sequences of this file
 	fi
 	echo
 	
