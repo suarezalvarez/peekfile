@@ -118,13 +118,9 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 	
 	
 		echo
-		echo ========== "$file" [NUCLEIC ACID FASTA FILE] ========== 			# header with file name for nucleic acids
-		echo
-	
-	
-		echo $(grep -c ">" "$file") nucleic acid 'sequence(s)' 		# number of fasta headers ">"
-		echo
-		echo $total_chars_sequences nucleotides in the sequences of this file
+		echo ========== "$file" [NUCLEIC ACID FASTA FILE] ========== 			# header with file name for nucleic acids	
+		echo xx $(grep -c ">" "$file") nucleic acid 'sequence(s)' 		# number of fasta headers ">"
+		echo xx $total_chars_sequences nucleotides in the sequences of this file
 	
 	
 	
@@ -132,22 +128,17 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 	else
 		echo
 		echo ========== "$file" [PROTEIN FASTA FILE] ==========  		 	# header with file name for proteins
-		echo	
-		
-		
-		echo $(grep -c ">" "$file") protein 'sequence(s)' 		# number of fasta headers ">"
-		echo
-		echo $total_chars_sequences amino acids in the sequences of this file
+		echo xx $(grep -c ">" "$file") protein 'sequence(s)' 		# number of fasta headers ">"
+		echo xx $total_chars_sequences amino acids in the sequences of this file
 	fi
-	echo
 	
 	
 	
 	
 	if [[ -h "$file" ]]; then	 							# is it a symlink?
-		echo Symbolic link
+		echo xx Symbolic link
 	else
-		echo Not a symbolic link
+		echo xx Not a symbolic link
 	fi
 	echo
 	
@@ -161,12 +152,14 @@ find $directory \( -name "*.fasta" -or -name "*.fa" \) \( -type f -or -type l \)
 		
 	elif [[ $(cat "$file" | wc -l) -le $((2*$lines)) ]]; then
 	
+	echo
 	echo '-- previsualization of the file content--'
 	echo 
 	cat "$file"										# if number of lines of file <= 2*input number of lines, then print the whole input file
 
 
 	else
+	echo
 	echo '-- previsualization of the file content --'
 	echo
 	echo "[!!!]WARNING: Only the first and last $lines lines are printed[!!!]"
